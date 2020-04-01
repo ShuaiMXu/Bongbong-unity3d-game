@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
@@ -10,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [Tooltip("In m")] [SerializeField] float xRang = 20f;
     [Tooltip("In m")] [SerializeField] float yRang = 20f;
     [SerializeField] GameObject[] guns;
+    [SerializeField] AudioClip shootSound;
+    [SerializeField] [Range(0, 1)] float shootSoundVolume = 0.3f;
     [Header("Screen-position")]
     [SerializeField] float positionPitchFactor = -5f;
     [SerializeField] float controlPitchFactor = -30f;
@@ -17,6 +20,9 @@ public class PlayerController : MonoBehaviour
     [Header("Control-throw")]
     [SerializeField] float positionYawFactor = 5f;
     [SerializeField] float controlRowFactor = -20;
+
+    Camera PlayerRig;
+
 
     float xThrow, yThrow;
     bool isControlEnabled = true;
@@ -49,6 +55,11 @@ public class PlayerController : MonoBehaviour
             var emissionModule = 
                 gun.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = isActive;
+
+            var musicModule =
+                gun.GetComponent<AudioSource>();
+            musicModule.enabled = isActive;
+
         }
     }
 
